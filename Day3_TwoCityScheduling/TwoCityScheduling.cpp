@@ -35,37 +35,46 @@ using namespace std;
 
 
 class Solution {
-    int twoCitySchedCostRec(vector<vector<int>>& costs, int n, int a, int b) {
-        if (a == 0 && b == 0 && n == 0) return 0;
+    int twoCitySchedCostRecHelper(vector<vector<int>>& costs, int a, int b) {
+        if (a == 0 && b == 0) return 0;
 
         if (a < 0 || b < 0) return INT_MAX;
 
-        int temp1 = twoCitySchedCostRec(costs, n - 1, a - 1, b);
-        int temp2 = twoCitySchedCostRec(costs, n - 1, a, b - 1);
+        int temp1 = twoCitySchedCostRecHelper(costs, a - 1, b);
+        int temp2 = twoCitySchedCostRecHelper(costs, a, b - 1);
 
-        temp1 = (temp1 == INT_MAX ? INT_MAX : temp1 + costs[n - 1][0]);
-        temp2 = (temp2 == INT_MAX ? INT_MAX : temp2 + costs[n - 1][1]);
+        temp1 = (temp1 == INT_MAX ? INT_MAX : temp1 + costs[a - 1 + b][0]);
+        temp2 = (temp2 == INT_MAX ? INT_MAX : temp2 + costs[a + b - 1][1]);
         return min(temp1, temp2);
     }
-    int twoCitySchedCostBottomUp(vector<vector<int>>& costs, vector<vector<int>>& dp, int n, int a, int b) {
-        if (a == 0 && b == 0 && n == 0) {
+
+    int twoCitySchedCostRec(vector<vector<int>>& costs) {
+        int n = costs.size();
+        int a = n >> 1;
+        int b = a;
+        return twoCitySchedCostRecHelper(costs, a, b);
+    }
+    int twoCitySchedCostBottomUpHelper(vector<vector<int>>& costs, vector<vector<int>>& dp, int a, int b) {
+        if (a == 0 && b == 0) {
             return dp[a][b] = 0;
         }
         if (a < 0 || b < 0) return INT_MAX;
 
         if (dp[a][b] != -1) return dp[a][b];
 
-        int temp1 = twoCitySchedCostBottomUp(costs, dp, n - 1, a - 1, b);
-        int temp2 = twoCitySchedCostBottomUp(costs, dp, n - 1, a, b - 1);
+        int temp1 = twoCitySchedCostBottomUpHelper(costs, dp, a - 1, b);
+        int temp2 = twoCitySchedCostBottomUpHelper(costs, dp, a, b - 1);
 
-        temp1 = (temp1 == INT_MAX ? temp1 : temp1 + costs[n - 1][0]);
-        temp2 = (temp2 == INT_MAX ? temp2 : temp2 + costs[n - 1][1]);
+        temp1 = (temp1 == INT_MAX ? temp1 : temp1 + costs[a - 1 + b][0]);
+        temp2 = (temp2 == INT_MAX ? temp2 : temp2 + costs[a + b - 1][1]);
 
         return dp[a][b] = min(temp1, temp2);
     }
-    int twoCitySchedCostBottomUp(vector<vector<int>>& costs, int n, int a, int b) {
+    int twoCitySchedCostBottomUp(vector<vector<int>>& costs) {
         vector<vector<int>> dp;
 
+        int a = costs.size() >> 1;
+        int b = a;
         for (int i = 0; i <= a; ++i) {
             vector<int> temp;
             for (int j = 0; j <= b; ++j) {
@@ -74,7 +83,7 @@ class Solution {
             dp.push_back(temp);
         }
 
-        twoCitySchedCostBottomUp(costs, dp, n, a, b);
+        twoCitySchedCostBottomUpHelper(costs, dp, a, b);
         return dp[a][b];
     }
 
@@ -110,8 +119,8 @@ class Solution {
     }
 public:
     int twoCitySchedCost(vector<vector<int>>& costs) {
-        // return twoCitySchedCostRec(costs, costs.size(), costs.size() >> 1, costs.size() >> 1);
-        // return twoCitySchedCostBottomUp(costs, costs.size(), costs.size() >> 1, costs.size() >> 1);
+        // return twoCitySchedCostRec(costs);
+        // return twoCitySchedCostBottomUp(costs);
 
         return twoCitySchedCostTopDown(costs);
     }

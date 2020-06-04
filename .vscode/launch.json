@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "CodeLens (Launch) - TowCityScheduling",
+            "request": "launch",
+            "mainClass": "Day3.TowCityScheduling",
+            "projectName": "LeetCodeJune2020Challenge_6657942f"
+        },
+        {
             "name": "g++.exe - Build and debug active file",
             "type": "cppdbg",
             "request": "launch",
