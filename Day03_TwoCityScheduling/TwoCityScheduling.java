@@ -1,6 +1,7 @@
 package Day03_TwoCityScheduling;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 
 
@@ -80,6 +81,19 @@ class Solution {
         }
 
         return dp[a][b];
+    }
+
+    private int twoCitySchedCostSortingSolution(int[][] costs) {
+        int c = 0;
+
+        Arrays.sort(costs, Comparator.comparingInt(o -> o[0] - o[1]));
+
+        for (int i = 0, j = costs.length - 1; i < j; ++i, --j) {
+            c += costs[i][0];
+            c += costs[j][1];
+        }
+
+        return c;
     }
     public int twoCitySchedCost(final int[][] costs) {
         // return twoCitySchedCostRec(costs);
