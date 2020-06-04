@@ -30,7 +30,7 @@ Google: 90% of our engineers use the software you wrote (Homebrew), but you canâ
 
 
 
-package Day01_InverBinayTree;
+package Day01_InvertBinayTree;
 
 // Definition for a binary tree node.
 class TreeNode {
