@@ -1,4 +1,4 @@
-package Day3_TwoCityScheduling;
+package Day03_TwoCityScheduling;
 
 import java.util.Arrays;
 
