@@ -103,7 +103,7 @@ class Solution {
     }
 }
 
-class TowCityScheduling {
+class TwoCityScheduling {
     public static void main(final String[] args) {
         
         final int[][] cities = {{259,770},{448,54},{926,667},{184,139},{840,118},{577,469}};
